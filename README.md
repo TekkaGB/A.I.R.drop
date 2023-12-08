@@ -8,6 +8,7 @@ Do note that this application is Windows only. When you first open the exe, you'
 There are 2 methods of doing this:
 1. Using the application to browse and download mods found on GameBanana
 2. Using 1-click install buttons from browsing mods directly from the GameBanana website
+These 2 methods will directly download the mod files into your AppData Sonic 3 AIR mods folder.
 
 ## FAQ
 ### Is this safe? My antivirus is getting set off.
