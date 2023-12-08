@@ -34,7 +34,7 @@ namespace AIRdrop
             InitializeComponent();
 
             // Get Version Number
-            var AIRdropVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+            var AIRdropVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             var version = AIRdropVersion.Substring(0, AIRdropVersion.LastIndexOf('.'));
             Title = $"A.I.R.drop v{version}";
             InitializeBrowser();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Reflection;
 
@@ -8,7 +9,7 @@ namespace AIRdrop
     {
         public static bool InstallGBHandler()
         {
-            string AppPath = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".exe");
+            string AppPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AIRdrop.exe");
             string protocolName = $"sonic3airdrop";
             try
             {

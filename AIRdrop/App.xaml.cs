@@ -42,20 +42,34 @@ namespace AIRdrop
             DispatcherUnhandledException += App_DispatcherUnhandledException;
             RegistryConfig.InstallGBHandler();
             bool running = AlreadyRunning();
-            if (e.Args.Length > 1 && e.Args[0] == "-download")
-                new ModDownloader().Download(e.Args[1], running);
-            MainWindow mw;
             if (!running)
             {
-                mw = new();
+                MainWindow mw = new MainWindow();
+                ShutdownMode = ShutdownMode.OnMainWindowClose;
                 mw.Show();
-                // Only check for updates if AIRdrop wasn't launched by 1-click install button
+                // Only check for updates if PizzaOven wasn't launched by 1-click install button
                 if (e.Args.Length == 0)
                     if (await AutoUpdater.CheckForAIRdropUpdate(new CancellationTokenSource()))
                         mw.Close();
             }
+
+            // Allow 1-click installs even if another instance is running
+            if (e.Args.Length > 1 && e.Args[0] == "-download")
+            {
+                // For some reason the downloader doesn't work if we don't create a main window...
+                // (the code above already creates one when no instance is running)
+                if (running)
+                {
+                    MainWindow mw = new MainWindow();
+                    ShutdownMode = ShutdownMode.OnMainWindowClose;
+                }
+                new ModDownloader().Download(e.Args[1], running);
+            }
             else if (running)
-                MessageBox.Show("AIRdrop is already running", "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            {
+                MessageBox.Show("A.I.R.drop is already running", "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                Application.Current.Shutdown();
+            }
         }
         private static void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
